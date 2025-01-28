@@ -1,3 +1,1 @@
-Chat app Backend project 
-use the socket io and firebase for notification 
-added funality for use authentication and verification
+This project is the backend for a real-time chat application that leverages Socket.IO for instant messaging and Firebase for notification services. It also includes robust user authentication and verification mechanisms to ensure a secure communication platform.
