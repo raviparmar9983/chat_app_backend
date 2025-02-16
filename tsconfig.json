@@ -30,7 +30,8 @@
       "@queries": ["src/queries/index"],
       "@utils": ["src/utils/index"],
       "@validators": ["src/validators/index"],
-      "@routes": ["src/routes/index"]
+      "@routes": ["src/routes/index"],
+      "@services": ["src/services/index"]
     }
   }
 }

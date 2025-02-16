@@ -4,6 +4,7 @@ const ChatSchema = new mongoose.Schema({
     chatName: {
         type: String,
         trim: true,
+        default: 'Private Chat'
     },
     isGroupChat: {
         type: Boolean,

@@ -1,8 +1,6 @@
 const errorHandler = (err, req, res, next) => {
-    console.error("Error:", err); // Log the error for debugging
-
-    let statusCode = 500;
-    let message = "Internal Server Error";
+    let statusCode = 400;
+    let message = err.message ?? "Internal Server Error";
 
     // 🔹 Handle Mongoose Validation Errors
     if (err.name === "ValidationError") {
@@ -46,4 +44,4 @@ const errorHandler = (err, req, res, next) => {
         message,
     });
 };
-export default errorHandler
+export { errorHandler }

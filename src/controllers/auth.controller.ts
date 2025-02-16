@@ -31,21 +31,21 @@ const loginUser = async (req, res, next) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email })
         if (!user) throw new CustomeError(messageKey.userNotFound)
-        if (user && (await (user as any).matchPassword(password))) {
-            const userToken: UserTokenDTO = {
-                _id: user._id.toString(),
-                name: user.name,
-                email: user.email,
-                profilePicture: user.profilePicture
-            }
-            const token = await createToken(userToken)
-            res.status(201).json({
-                status: true,
-                message: messageKey.recordCreatedSuccessfully,
-                data: userToken,
-                token,
-            })
+        if (user && !(await (user as any).matchPassword(password))) throw new CustomeError(messageKey.invalidCredentials)
+        const userToken: UserTokenDTO = {
+            _id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            profilePicture: user.profilePicture
         }
+        const token = await createToken(userToken)
+        res.status(201).json({
+            status: true,
+            message: messageKey.loginSuccessMessage,
+            data: userToken,
+            token,
+        })
+
     } catch (error) {
         next(error)
     }

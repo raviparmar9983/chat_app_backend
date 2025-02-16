@@ -5,6 +5,7 @@
         "DB_USER": "parmarravi9983",
         "DB-PASS": "86wwxMIsJwH4Oe9j"
     },
+    "ORIGIN": "http://localhost:5173",
     "NODEMAILER": {
         "FROM_NAME": "alisa.wiza@ethereal.email",
         "HOST": "smtp.ethereal.email",
