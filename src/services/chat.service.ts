@@ -1,5 +1,6 @@
 import { messageKey } from "@constants"
 import { Chat } from "@models"
+import { getAllChatForUser } from "@queries";
 import { CustomeError } from "@utils"
 import mongoose from "mongoose";
 
@@ -36,11 +37,9 @@ export const accessChatService = async (loginUserId: string, userId: string) => 
     }
 }
 
-export const getUserchat = async (userId: string) => {
+export const getUserchat = async (userId: string, params: any) => {
     try {
-        const chats = await Chat.find({
-            users: { $elemMatch: { $eq: userId } }
-        })
+        const chats = await Chat.aggregate(getAllChatForUser(userId, params.chatId))
         return ({
             status: true,
             data: chats,

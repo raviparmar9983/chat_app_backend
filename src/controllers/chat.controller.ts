@@ -16,7 +16,8 @@ export const accessChat = async (req, res, next) => {
 export const getUserchats = async (req, res, next) => {
     try {
         const currUserId = req.user._id
-        const chat = await getUserchat(currUserId)
+        const params = req.query
+        const chat = await getUserchat(currUserId, params)
         res.status(statusCodes.success_status).json(chat)
     } catch (err) {
         next(err)
