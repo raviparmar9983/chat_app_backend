@@ -1,7 +1,7 @@
 import * as config from 'config';
 import * as express from 'express';
 import * as cors from 'cors'
-import { authRouter, chatRouter, userRouter } from '@routes';
+import { authRouter, chatRouter, messageRouter, userRouter } from '@routes';
 import { authMiddleware, errorHandler } from '@middlewares';
 
 
@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/user', authMiddleware, userRouter)
 app.use('/api/chat', authMiddleware, chatRouter)
+app.use('/api/message', authMiddleware, messageRouter)
 app.use(errorHandler)
 
 export default app
