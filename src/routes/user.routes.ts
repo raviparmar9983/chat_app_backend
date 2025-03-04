@@ -1,8 +1,8 @@
-import { getAllUser } from '@controllers';
-import * as express from 'express';
+import { getAllUser } from "@controllers";
+import * as express from "express";
 
-const userRouter = express.Router()
+const userRouter = express.Router();
 
-userRouter.get("/", getAllUser)
+userRouter.get("/", getAllUser);
 
-export { userRouter }
+export { userRouter };
