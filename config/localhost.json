@@ -1,28 +1,28 @@
 {
-    "PORT": 3000,
-    "DB": {
-        "URL": "mongodb://localhost:27017/Chat-backend",
-        "DB_USER": "parmarravi9983",
-        "DB-PASS": "86wwxMIsJwH4Oe9j"
-    },
-    "NODEMAILER": {
-        "FROM_NAME": "alisa.wiza@ethereal.email",
-        "HOST": "smtp.ethereal.email",
-        "PORT": 587,
-        "SERVICE": "gmail",
-        "AUTH": {
-            "user": "alisa.wiza@ethereal.email",
-            "pass": "Y52xUJveyU56pf1rrE"
-        }
-    },
-    "JWT": {
-        "SECRET": "b38d40baf9f00b071db23b3b5b66fdc5",
-        "ACCESSTOKENTIME": "10H",
-        "REFRESHTOKENTIME": "1d",
-        "RESETPASSWORDLINKEXP": "10m"
-    },
-    "CLOUDINARY": {
-        "API_KEY": "421793928151118",
-        "PASSWORD": "Waz2jje5SuJnZXvIYGt6oiJn3wY"
+  "PORT": 3000,
+  "DB": {
+    "URL": "mongodb://localhost:27017/Chat-backend",
+    "DB_USER": "parmarravi9983",
+    "DB-PASS": "86wwxMIsJwH4Oe9j"
+  },
+  "NODEMAILER": {
+    "FROM_NAME": "alisa.wiza@ethereal.email",
+    "HOST": "smtp.ethereal.email",
+    "PORT": 587,
+    "SERVICE": "gmail",
+    "AUTH": {
+      "user": "alisa.wiza@ethereal.email",
+      "pass": "Y52xUJveyU56pf1rrE"
     }
+  },
+  "JWT": {
+    "SECRET": "b38d40baf9f00b071db23b3b5b66fdc5",
+    "ACCESSTOKENTIME": "10H",
+    "REFRESHTOKENTIME": "1d",
+    "RESETPASSWORDLINKEXP": "10m"
+  },
+  "CLOUDINARY": {
+    "API_KEY": "421793928151118",
+    "PASSWORD": "Waz2jje5SuJnZXvIYGt6oiJn3wY"
+  }
 }
