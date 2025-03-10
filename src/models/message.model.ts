@@ -13,6 +13,14 @@ const MessageSchema = new mongoose.Schema(
     chat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Chat',
+      required: true,
+    },
+    readyBy: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'User',
+    },
+    deletedFor: {
+      type: [mongoose.Schema.Types.ObjectId],
     },
   },
   {
