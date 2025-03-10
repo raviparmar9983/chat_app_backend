@@ -1,8 +1,7 @@
-import { messageKey } from "@constants";
-import { UserTokenDTO } from "@dtos";
-import { User } from "@models";
-import { CustomeError } from "@utils";
-import { createToken } from "@utils";
+import { messageKey } from '@constants';
+import { UserTokenDTO } from '@dtos';
+import { User } from '@models';
+import { createToken, CustomeError } from '@utils';
 
 const registerUser = async (req, res, next) => {
   try {

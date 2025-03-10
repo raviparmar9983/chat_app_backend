@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const errorHandler = (err, req, res, next) => {
   let statusCode = 400;
-  let message = err.message ?? "Internal Server Error";
+  let message = err.message ?? 'Internal Server Error';
 
   // 🔹 Handle Mongoose Validation Errors
-  if (err.name === "ValidationError") {
+  if (err.name === 'ValidationError') {
     statusCode = 400;
     message = Object.values(err.errors)
       .map((val: { message: string }) => val.message)
-      .join(", ");
+      .join(', ');
   }
 
   // 🔹 Handle MongoDB Duplicate Key Error
@@ -18,7 +19,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // 🔹 Handle Mongoose Cast Errors (Invalid ObjectId)
-  else if (err.name === "CastError" && err.kind === "ObjectId") {
+  else if (err.name === 'CastError' && err.kind === 'ObjectId') {
     statusCode = 400;
     message = `Invalid ${err.path}: ${err.value}`;
   }
@@ -26,16 +27,16 @@ const errorHandler = (err, req, res, next) => {
   // 🔹 Handle Express Validation Errors (like express-validator)
   else if (err.errors && Array.isArray(err.errors)) {
     statusCode = 400;
-    message = err.errors.map((error) => error.msg).join(", ");
+    message = err.errors.map((error) => error.msg).join(', ');
   }
 
   // 🔹 Handle JWT Authentication Errors
-  else if (err.name === "JsonWebTokenError") {
+  else if (err.name === 'JsonWebTokenError') {
     statusCode = 401;
-    message = "Invalid token, please log in again.";
-  } else if (err.name === "TokenExpiredError") {
+    message = 'Invalid token, please log in again.';
+  } else if (err.name === 'TokenExpiredError') {
     statusCode = 401;
-    message = "Session expired, please log in again.";
+    message = 'Session expired, please log in again.';
   }
 
   // 🔹 Send the error response

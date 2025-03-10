@@ -1,4 +1,4 @@
-import { statusCodes } from "@constants";
+import { statusCodes } from '@constants';
 import {
   accessChatService,
   addUserTOGroupService,
@@ -6,7 +6,7 @@ import {
   deleteUserFromGroup,
   getUserchat,
   updatedChatService,
-} from "@services";
+} from '@services';
 
 export const accessChat = async (req, res, next) => {
   try {

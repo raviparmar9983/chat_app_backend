@@ -1,6 +1,6 @@
-import { statusCodes } from "@constants";
-import { UserQueryParamDTO } from "@dtos";
-import { getAllUserService } from "@services";
+import { statusCodes } from '@constants';
+import { UserQueryParamDTO } from '@dtos';
+import { getAllUserService } from '@services';
 
 const getAllUser = async (req, res, next) => {
   try {

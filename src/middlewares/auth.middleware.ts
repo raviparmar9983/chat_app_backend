@@ -1,15 +1,15 @@
-import { messageKey } from "@constants";
-import { CustomeError, jwtTokenVerifier } from "@utils";
+import { messageKey } from '@constants';
+import { CustomeError, jwtTokenVerifier } from '@utils';
 
 const authMiddleware = async (req, res, next) => {
   try {
     if (
       !req.headers.authorization ||
-      !req.headers.authorization.includes("Bearer")
+      !req.headers.authorization.includes('Bearer')
     )
       return next(new CustomeError(messageKey.unauthorizeResourse));
     const { authorization } = req.headers;
-    const authToken = authorization.replace(/bearer/gim, "").trim();
+    const authToken = authorization.replace(/bearer/gim, '').trim();
     const decoded: any = await jwtTokenVerifier(authToken);
     if (!decoded?.payload?.userData)
       throw new CustomeError(messageKey.unauthorizeResourse);

@@ -1,12 +1,12 @@
-import { BaseQueryParamsDTO } from "@dtos";
-import { FilterQuery, PipelineStage } from "mongoose";
+import { BaseQueryParamsDTO } from '@dtos';
+import { FilterQuery, PipelineStage } from 'mongoose';
 
 export async function baseListQuery(
   baseQuery: PipelineStage[],
   queryParams: BaseQueryParamsDTO,
   searchFields: any,
   filterFields: any,
-  option?: {}
+  option?: Record<string, any>,
 ) {
   const defaultOpt = {
     auditData: false,
@@ -45,10 +45,10 @@ export async function baseListQuery(
     : 10;
 
   const sortField: string = !queryParams?.sortField
-    ? "_id"
+    ? '_id'
     : queryParams.sortField;
 
-  const sortOrder = queryParams?.sortOrder === "asc" ? 1 : -1;
+  const sortOrder = queryParams?.sortOrder === 'asc' ? 1 : -1;
 
   const sort: Record<string, 1 | -1> = {
     [sortField]: sortOrder,
@@ -94,7 +94,7 @@ export async function baseListQuery(
   const paginationQuery: PipelineStage.FacetPipelineStage[] = [];
   if (
     !defaultOpt.ignorePagination &&
-    queryParams?.pageLimit?.toLowerCase() !== "all"
+    queryParams?.pageLimit?.toLowerCase() !== 'all'
   ) {
     const skip = limit * (pageNum - 1);
     paginationQuery.push({ $skip: skip }, { $limit: limit });
@@ -109,7 +109,7 @@ export async function baseListQuery(
   };
 }
 const getFiltersQuery = async (filterFields: any, queryParams: any) => {
-  if (typeof filterFields !== "object") return {};
+  if (typeof filterFields !== 'object') return {};
   const filters: FilterQuery<any> = { $and: [] };
   const filterKey = Object.keys(filterFields);
   for (const filter of filterKey) {
@@ -117,20 +117,20 @@ const getFiltersQuery = async (filterFields: any, queryParams: any) => {
     const value = queryParams[trimmedFeild]?.trim();
     if (!value) continue;
     const type = filterFields[trimmedFeild].type;
-    if (type === "string") {
-      const values = value.split(",").map((val) => val.trim());
+    if (type === 'string') {
+      const values = value.split(',').map((val) => val.trim());
       const condition =
         values.length > 1
           ? {
               $or: values.map((val) => ({
-                [trimmedFeild]: { $regex: val, $options: "i" },
+                [trimmedFeild]: { $regex: val, $options: 'i' },
               })),
             }
           : {
-              [trimmedFeild]: { $regex: values[0], $options: "i" },
+              [trimmedFeild]: { $regex: values[0], $options: 'i' },
             };
       filters.$and.push(condition);
-    } else if (type === "date") {
+    } else if (type === 'date') {
       try {
         const DATE = new Date(value);
         const date = DATE.getDate();
@@ -147,6 +147,7 @@ const getFiltersQuery = async (filterFields: any, queryParams: any) => {
         };
         filters.$and.push(condition);
       } catch (err) {
+        console.error(err);
         continue;
       }
     }
@@ -157,12 +158,12 @@ const getFiltersQuery = async (filterFields: any, queryParams: any) => {
 const getSearchQuery = (searchFields: string[], searchString: string) => {
   const searchObject: Array<FilterQuery<any>> = [];
   const specialCharacters = /[.*+?^${}()|[\]\\]/g;
-  const sanitizedSearch = searchString.replace(specialCharacters, "\\$&");
+  const sanitizedSearch = searchString.replace(specialCharacters, '\\$&');
   for (const field of searchFields) {
     searchObject.push({
       [field.trim()]: {
         $regex: sanitizedSearch,
-        $options: "i",
+        $options: 'i',
       },
     });
   }

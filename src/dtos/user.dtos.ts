@@ -1,4 +1,4 @@
-import { BaseQueryParamsDTO } from "./common.dtos";
+import { BaseQueryParamsDTO } from './common.dtos';
 
 export interface UserDTO {
   name: string;

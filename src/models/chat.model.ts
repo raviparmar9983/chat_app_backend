@@ -1,11 +1,11 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from 'mongoose';
 
 const ChatSchema = new mongoose.Schema(
   {
     chatName: {
       type: String,
       trim: true,
-      default: "Private Chat",
+      default: 'Private Chat',
     },
     isGroupChat: {
       type: Boolean,
@@ -14,23 +14,23 @@ const ChatSchema = new mongoose.Schema(
     users: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
     ],
     latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Message",
+      ref: 'Message',
     },
     groupAdmin: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const Chat = mongoose.model("Chat", ChatSchema);
+const Chat = mongoose.model('Chat', ChatSchema);
 
 export { Chat };

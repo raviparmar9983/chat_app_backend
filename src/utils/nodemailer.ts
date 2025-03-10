@@ -1,8 +1,8 @@
-import { EmailDTO } from "@dtos";
-import * as nodemailer from "nodemailer";
-import * as config from "config";
+import { EmailDTO } from '@dtos';
+import * as nodemailer from 'nodemailer';
+import * as config from 'config';
 
-const nodeEmailerData: any = config.get("NODEMAILER");
+const nodeEmailerData: any = config.get('NODEMAILER');
 const tranporter = nodemailer.createTransport({
   host: nodeEmailerData.HOST,
   port: nodeEmailerData.PORT,
@@ -24,7 +24,7 @@ export const sendEmail = async (option: EmailDTO) => {
     await tranporter.sendMail(email);
     return true;
   } catch (err) {
-    console.log("error in email sending", err);
+    console.info('error in email sending', err);
     return false;
   }
 };

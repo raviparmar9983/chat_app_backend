@@ -1,8 +1,8 @@
-import mongoose, { PipelineStage } from "mongoose";
+import mongoose, { PipelineStage } from 'mongoose';
 
 export const getAllChatForUser = (
   userId: string,
-  chatId?: string
+  chatId?: string,
 ): PipelineStage[] => [
   {
     $match: {
@@ -14,20 +14,20 @@ export const getAllChatForUser = (
   },
   {
     $lookup: {
-      from: "users",
-      localField: "users",
-      foreignField: "_id",
-      as: "users",
+      from: 'users',
+      localField: 'users',
+      foreignField: '_id',
+      as: 'users',
     },
   },
   {
     $addFields: {
       item: {
         $filter: {
-          input: "$users",
-          as: "user",
+          input: '$users',
+          as: 'user',
           cond: {
-            $ne: ["$$user._id", new mongoose.Types.ObjectId(userId)],
+            $ne: ['$$user._id', new mongoose.Types.ObjectId(userId)],
           },
         },
       },
@@ -35,9 +35,9 @@ export const getAllChatForUser = (
   },
   {
     $addFields: {
-      userName: { $first: "$item.name" },
-      contact: { $first: "$item.email" },
-      profilePic: { $first: "$item.profilePicture" },
+      userName: { $first: '$item.name' },
+      contact: { $first: '$item.email' },
+      profilePic: { $first: '$item.profilePicture' },
     },
   },
   {

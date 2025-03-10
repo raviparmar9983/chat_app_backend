@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import * as bcrypt from "bcryptjs";
-import { UserDTO } from "@dtos";
+import mongoose from 'mongoose';
+import * as bcrypt from 'bcryptjs';
+import { UserDTO } from '@dtos';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -27,11 +27,11 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
@@ -42,5 +42,5 @@ UserSchema.methods.matchPassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model<UserDTO>("User", UserSchema);
+const User = mongoose.model<UserDTO>('User', UserSchema);
 export { User };
