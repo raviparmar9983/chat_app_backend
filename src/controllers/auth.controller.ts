@@ -1,24 +1,26 @@
 import { messageKey } from '@constants';
 import { UserTokenDTO } from '@dtos';
 import { User } from '@models';
-import { createToken, CustomeError } from '@utils';
+import { createToken, CustomeError, encryptData } from '@utils';
 
 const registerUser = async (req, res, next) => {
   try {
-    const user = await User.create(req.body);
-    if (!user) throw new CustomeError(messageKey.recordNotCreated);
-    const userToken: UserTokenDTO = {
-      _id: user._id.toString(),
+    const user = req.body;
+    // const user = await User.create(req.body);
+    // if (!user) throw new CustomeError(messageKey.recordNotCreated);
+    const userToken = {
+      // _id: user._id.toString(),
       name: user.name,
       email: user.email,
-      profilePicture: user.profilePicture,
+      // profilePicture: user.profilePicture,
     };
-    const token = await createToken(userToken);
+    // const token = await createToken(userToken);
+    encryptData(userToken);
     res.status(201).json({
       status: true,
       message: messageKey.recordCreatedSuccessfully,
       data: userToken,
-      token,
+      // token,
     });
   } catch (error) {
     next(error);

@@ -25,5 +25,8 @@
   "CLOUDINARY": {
     "API_KEY": "421793928151118",
     "PASSWORD": "Waz2jje5SuJnZXvIYGt6oiJn3wY"
+  },
+  "CRYPTO": {
+    "SECRET": ":=-{,Cd82.}raWjCi-t18q{S74V5%3aJ"
   }
 }
