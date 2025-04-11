@@ -1,8 +1,10 @@
-import { messageKey, statusCodes } from '@constants';
-import { UserDTO, UserTokenDTO } from '@dtos';
-import { User } from '@models';
-import { registerUserService, verificationLinkService } from '@services';
-import { createToken, CustomeError } from '@utils';
+import { statusCodes } from '@constants';
+import { UserDTO } from '@dtos';
+import {
+  loginUserService,
+  registerUserService,
+  verificationLinkService,
+} from '@services';
 
 import { NextFunction, Request, Response } from 'express';
 
@@ -23,23 +25,8 @@ const registerUser = async (
 const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) throw new CustomeError(messageKey.userNotFound);
-    if (user && !(await (user as any).matchPassword(password)))
-      throw new CustomeError(messageKey.invalidCredentials);
-    const userToken: UserTokenDTO = {
-      _id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      profilePicture: user.profilePicture,
-    };
-    const token = await createToken(userToken);
-    res.status(201).json({
-      status: true,
-      message: messageKey.loginSuccessMessage,
-      data: userToken,
-      token,
-    });
+    const login = await loginUserService({ email, password });
+    res.status(201).json(login);
   } catch (error) {
     next(error);
   }
