@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import * as bcrypt from 'bcryptjs';
 import { UserDTO } from '@dtos';
 
 const UserSchema = new mongoose.Schema(
@@ -8,17 +7,29 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      lower: true,
     },
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     password: {
       type: String,
       required: true,
+      minLength: 6,
     },
     profilePicture: {
       type: String,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationLink: {
+      type: String,
+      default: null,
     },
     isDeleted: {
       type: Boolean,
@@ -29,18 +40,6 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
-
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
-    next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-UserSchema.methods.matchPassword = async function (password: string) {
-  return await bcrypt.compare(password, this.password);
-};
 
 const User = mongoose.model<UserDTO>('User', UserSchema);
 export { User };

@@ -1,12 +1,18 @@
 import { messageKey, statusCodes } from '@constants';
-import { UserTokenDTO } from '@dtos';
+import { LinkVerificationDTO, UserTokenDTO } from '@dtos';
 import * as config from 'config';
 import { EncryptJWT, jwtDecrypt } from 'jose';
 
 const code: string = config.get('JWT.SECRET');
 const encHeadder = { alg: 'dir', enc: 'A256GCM' };
-const createToken = async (userData: UserTokenDTO) => {
-  const expiryTime: string = config.get('JWT.ACCESSTOKENTIME') ?? '10H';
+
+const createToken = async (
+  userData: UserTokenDTO | LinkVerificationDTO,
+  isVerification = false,
+) => {
+  const expiryTime: string = isVerification
+    ? '10M'
+    : (config.get('JWT.ACCESSTOKENTIME') ?? '10H');
   const secret = new TextEncoder().encode(code);
 
   const token = new EncryptJWT({ userData })

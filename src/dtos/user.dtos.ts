@@ -5,6 +5,9 @@ export interface UserDTO {
   email: string;
   password: string;
   profilePicture: string;
+  verificationLink?: string;
+  isVerified?: boolean;
+  isDeleted?: boolean;
 }
 
 export interface UserQueryParamDTO extends BaseQueryParamsDTO {
@@ -16,4 +19,10 @@ export interface UserTokenDTO {
   name: string;
   email: string;
   profilePicture: string;
+}
+
+export interface LinkVerificationDTO {
+  _id: string;
+  verification?: boolean;
+  forgotPassword?: boolean;
 }

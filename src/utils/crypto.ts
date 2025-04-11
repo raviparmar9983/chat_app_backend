@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 import * as config from 'config';
 
 const secret: string = config.get('CRYPTO.SECRET');
@@ -19,7 +19,7 @@ export const encryptData = (data: any): string => {
   const cipher = crypto.createCipheriv('aes-256-gcm', padKey(secret), iv);
   let encryptedData = cipher.update(data, 'utf-8', 'hex');
   encryptedData += cipher.final('hex');
-  return `${iv.toString()}:${encryptedData}`;
+  return `${iv.toString('hex')}:${encryptedData}`;
 };
 
 export const decryptData = (encryptedData: any): string => {

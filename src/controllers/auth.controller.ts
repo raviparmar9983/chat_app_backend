@@ -1,27 +1,20 @@
-import { messageKey } from '@constants';
-import { UserTokenDTO } from '@dtos';
+import { messageKey, statusCodes } from '@constants';
+import { UserDTO, UserTokenDTO } from '@dtos';
 import { User } from '@models';
-import { createToken, CustomeError, encryptData } from '@utils';
+import { registerUserService, verificationLinkService } from '@services';
+import { createToken, CustomeError } from '@utils';
 
-const registerUser = async (req, res, next) => {
+import { NextFunction, Request, Response } from 'express';
+
+const registerUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const user = req.body;
-    // const user = await User.create(req.body);
-    // if (!user) throw new CustomeError(messageKey.recordNotCreated);
-    const userToken = {
-      // _id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      // profilePicture: user.profilePicture,
-    };
-    // const token = await createToken(userToken);
-    encryptData(userToken);
-    res.status(201).json({
-      status: true,
-      message: messageKey.recordCreatedSuccessfully,
-      data: userToken,
-      // token,
-    });
+    const userData: UserDTO = req.body;
+    const user = await registerUserService(userData);
+    res.status(statusCodes.success_status).json(user);
   } catch (error) {
     next(error);
   }
@@ -52,4 +45,14 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-export { registerUser, loginUser };
+const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req?.params?.token;
+    const data = await verificationLinkService(token);
+    res.redirect(data?.data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { registerUser, loginUser, verifyUser };
